@@ -1,0 +1,97 @@
+# Data Analysis Copilot
+
+A Colab-friendly AI agent for interactive data analysis. The project demonstrates how to combine LangChain + OpenAI (or compatible LLMs) with pandas and Plotly to answer natural-language questions about tabular datasets, perform exploratory analysis, recommend visualizations, and run simple predictive checks.
+
+This repository includes a fully worked Google Colab notebook:
+- Data_Analysis_Copilot_20251022_040708.ipynb
+  (Colab link in the notebook or open directly: https://colab.research.google.com/github/waigisteve/AccelerateDevGitHubCopilot/blob/main/Data_Analysis_Copilot_20251022_040708.ipynb)
+
+## Key features
+- Convert natural language to Pandas/SQL operations (few-shot prompting + agent)
+- Chain-of-thought style reasoning for statistical checks and Q&A
+- Automatic visualization suggestions using Plotly
+- Anomaly/outlier detection guidance
+- Simple guidance for predictive modeling approaches (scikit-learn / statsmodels)
+
+## Tech stack
+- Python 3.12 (tested on Colab)
+- LangChain (v0.3.x series)
+- OpenAI Python SDK (v2.x series)
+- Pandas, Plotly
+- Optional: scikit-learn, statsmodels
+
+## Notebook highlights
+- Clean install cell that pins LangChain + OpenAI compatible versions.
+- Example that creates a pandas DataFrame agent and demonstrates a simple query ("Who is the oldest person and what city are they from?").
+- A Smart Data Agent flow that:
+  - Prompts the user to upload CSV/Excel/JSON,
+  - Loads the file into `df`,
+  - Initializes an LLM agent with a Python AST execution tool,
+  - Accepts natural language queries and returns results,
+  - Provides automatic Plotly visualizations from the data.
+
+## Quickstart — Run in Google Colab
+1. Open the notebook in Colab:
+   https://colab.research.google.com/github/waigisteve/AccelerateDevGitHubCopilot/blob/main/Data_Analysis_Copilot_20251022_040708.ipynb
+
+2. Make sure you have an OpenAI-compatible API key:
+   - In Colab you can provide it via the notebook's secrets or via `userdata.get("OPENAI_API_KEY")` as the notebook demonstrates.
+   - Locally set `OPENAI_API_KEY` in your environment before running notebooks or scripts.
+
+3. Run cells in order. The notebook includes a "clean install" cell that pins LangChain and OpenAI SDK versions used in testing.
+
+## Installation (local / minimal)
+If you want to run locally (not Colab), create a virtual env and install:
+
+pip install --upgrade pip
+pip install "langchain>=0.3.0,<0.4.0" "langchain-openai>=0.2.0,<0.4.0" "langchain-community>=0.3.0,<0.4.0" openai pandas plotly
+
+Notes:
+- The notebook pins and tests specific versions:
+  - langchain==0.3.27
+  - langchain-core==0.3.79
+  - langchain-openai==0.3.35
+  - langchain-community==0.3.31
+  - openai==2.6.1
+- Colab may report a minor `requests` version conflict when packages are upgraded. This is expected in the Colab environment when replacing system packages; the notebook reports the message but usually continues to work.
+
+## Usage (what to ask)
+Example natural language queries you can ask the agent:
+- "What are the top 5 categories by sales?"
+- "Which country has the highest population?"
+- "Show correlation between revenue and profit."
+- "List countries with names longer than 10 letters."
+- "Detect outliers in numeric columns."
+- "Suggest a chart for this dataset."
+
+The agent will run pandas operations and/or use the Python AST execution tool to produce answers and may show Plotly charts for visualization suggestions.
+
+## Troubleshooting & Tips
+- Agent iteration/time limits: The notebook's agent can occasionally stop due to iteration or time limits. Re-running the specific agent cell or increasing allowed iterations (if configurable) can help.
+- allow_dangerous_code: Some agent patterns require enabling execution of dynamic code; the notebook shows the flag used when creating certain pandas agents. Only enable in trusted environments (e.g., your own Colab).
+- Requests version warnings in Colab: The pip dependency resolver sometimes leaves Colab's preinstalled package versions different from those required. These warnings are usually non-fatal for the notebook flow.
+- If you get errors about unavailable tools, ensure the correct langchain/llm / experimental packages are installed and the notebook is executed sequentially (Colab requires re-run to re-enable upload widgets).
+
+## Contributing
+Contributions, bug reports, and feature requests are welcome.
+- Open an issue describing the problem or suggestion.
+- For code contributions, open a pull request with tests / a short description of the change.
+
+Suggested contribution flow:
+1. Fork the repo
+2. Create a branch: git checkout -b feat/your-feature
+3. Commit & push
+4. Open a PR with a description and link to any relevant notebook outputs
+
+## License
+This repository is provided under the MIT License. If you prefer a different license, update the LICENSE file accordingly.
+
+## Acknowledgements
+Built to demonstrate the integration of LangChain agents, LLMs, and pandas for interactive data analysis workflows and developer tooling examples (Colab-friendly).
+
+---
+
+If you'd like, I can:
+- Open a PR adding this README.md to the repo,
+- Generate a condensed README (one-page README) for the GitHub repository front page,
+- Or extend the README with step-by-step local development instructions and a Dockerfile. Which would you prefer?
